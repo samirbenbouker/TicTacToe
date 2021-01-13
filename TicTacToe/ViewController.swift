@@ -54,6 +54,9 @@ class ViewController: UIViewController, UIAlertViewDelegate {
                      0,0,0,
                      0,0,0]
     
+    //message play again button dialog
+    let playAgain:String = "PLAY AGAIN"
+    
     @IBAction func action(_ sender: Any) {
         
         if(gameState[(sender as AnyObject).tag-1] == 0) {
@@ -238,9 +241,7 @@ class ViewController: UIViewController, UIAlertViewDelegate {
         
         if(player == 1) {
             
-            let alert = UIAlertController(title: "WIN", message: "WINNER IS PLAYER 1", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "PLAY AGAIN", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            dialog(title: "WIN", message: "WINNER IS PLAYER 1", titleButton: playAgain)
             
             winsPlayer1 += 1
             labelPointsP1.text = "\(winsPlayer1)"
@@ -249,9 +250,7 @@ class ViewController: UIViewController, UIAlertViewDelegate {
         }
         else {
             
-            let alert = UIAlertController(title: "WIN", message: "WINNER IS PLAYER 2", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "PLAY AGAIN", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            dialog(title: "WIN", message: "WINNER IS PLAYER 2", titleButton: playAgain)
             
             winsPlayer2 += 1
             labelPointsP2.text = "\(winsPlayer2)"
@@ -264,6 +263,31 @@ class ViewController: UIViewController, UIAlertViewDelegate {
         
         self.gameState = [0,0,0,0,0,0,0,0,0]
         
+        resetButtonsImg()
+        
+    }
+    
+    func tie() {
+        
+        dialog(title: "TIE", message: "ANY PLAYER WIN", titleButton: playAgain)
+        
+        resetGame()
+        
+    }
+
+    @IBAction func resetGameButton(_ sender: Any) {
+        
+        self.gameState = [0,0,0,0,0,0,0,0,0]
+        
+        resetButtonsImg()
+        
+        labelPointsP1.text = "0"
+        labelPointsP2.text = "0"
+        
+    }
+    
+    func resetButtonsImg() {
+        
         button00.setImage(UIImage(named:tabGame), for: .normal)
         button01.setImage(UIImage(named:tabGame), for: .normal)
         button02.setImage(UIImage(named:tabGame), for: .normal)
@@ -278,35 +302,10 @@ class ViewController: UIViewController, UIAlertViewDelegate {
         
     }
     
-    func tie() {
-        
-        let alert = UIAlertController(title: "TIE", message: "ANY PLAYER WIN", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "PLAY AGAIN", style: UIAlertAction.Style.default, handler: nil))
+    func dialog(title:String, message:String, titleButton:String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: titleButton, style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-        
-        resetGame()
-        
-    }
-
-    @IBAction func resetGameButton(_ sender: Any) {
-        
-        self.gameState = [0,0,0,0,0,0,0,0,0]
-        
-        button00.setImage(UIImage(named:tabGame), for: .normal)
-        button01.setImage(UIImage(named:tabGame), for: .normal)
-        button02.setImage(UIImage(named:tabGame), for: .normal)
-        
-        button10.setImage(UIImage(named:tabGame), for: .normal)
-        button11.setImage(UIImage(named:tabGame), for: .normal)
-        button12.setImage(UIImage(named:tabGame), for: .normal)
-        
-        button20.setImage(UIImage(named:tabGame), for: .normal)
-        button21.setImage(UIImage(named:tabGame), for: .normal)
-        button22.setImage(UIImage(named:tabGame), for: .normal)
-        
-        labelPointsP1.text = "0"
-        labelPointsP2.text = "0"
-        
     }
 }
 
